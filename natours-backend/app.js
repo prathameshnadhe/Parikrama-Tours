@@ -5,8 +5,9 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors');
 
-const AppErrorHandling = require('./utils/appErrorHandling'); 
+const AppErrorHandling = require('./utils/appErrorHandling');
 const globalErrorhandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -23,17 +24,20 @@ app.use(helmet());
 // Development logging
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+  app.use(morgan('dev'));
 }
 
 // Limit request from same API
 const limiter = rateLimit({
-    max: 1000,
-    windowMs: 60 * 60 * 1000,
-    message: 'To many request from this IP, please try in an hour!'
+  max: 1000,
+  windowMs: 60 * 60 * 1000,
+  message: 'To many request from this IP, please try in an hour!',
 });
 
 app.use('/api', limiter);
+
+// Enable CORS
+app.use(cors());
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
@@ -45,9 +49,18 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter pollution
-app.use(hpp({
-    whitelist: ['duration', 'ratingQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price']
-}));
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
+  })
+);
 
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
@@ -59,7 +72,9 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/booking', bookingRouter);
 
 app.all('*', (req, res, next) => {
-    next(new AppErrorHandling(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(
+    new AppErrorHandling(`Can't find ${req.originalUrl} on this server!`, 404)
+  );
 });
 
 app.use(globalErrorhandler);
