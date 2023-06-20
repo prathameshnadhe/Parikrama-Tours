@@ -1,0 +1,17 @@
+body {
+  line-height: 1;
+  font-weight: 250;
+  font-family: "Lato", sans-serif;
+  color: #e7e7e7;
+  padding: 2rem;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
