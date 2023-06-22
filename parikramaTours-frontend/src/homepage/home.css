@@ -160,33 +160,7 @@
   right: 2rem;
   width: 70%;
   z-index: 10;
-}
-
-.btn,
-.btn:link,
-.btn:visited {
-  font-size: 0.8rem;
-  padding: 0.5rem 1rem;
-  border-radius: 10rem;
-  text-transform: uppercase;
-  display: inline-block;
-  text-decoration: none;
-  position: relative;
-  -webkit-transition: all 0.4s;
-  transition: all 0.4s;
-  font-weight: 400;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  /*Add later when we use this for the button in form*/
-  border: none;
-  cursor: pointer;
-}
-
-.btn:hover {
-  -webkit-transform: translateY(-3px);
-  transform: translateY(-3px);
-  -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  line-height: 1.5;
 }
 
 .btn:active {
@@ -275,4 +249,9 @@
   outline: none;
   outline: 3px solid #55c57a;
   outline-offset: 3px;
+}
+
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
 }
