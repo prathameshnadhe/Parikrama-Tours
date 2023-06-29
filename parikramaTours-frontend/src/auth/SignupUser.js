@@ -35,7 +35,7 @@ function SignupUser() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
+      const response = await axios.post(
         "http://localhost:8080/api/v1/users/signup",
         {
           name,
@@ -44,10 +44,21 @@ function SignupUser() {
           passwordConfirm,
         }
       );
-      toast.success("Register success. Please login.");
-      console.log("REGISTER USER ===> ", res);
 
-      navigate("/login");
+      const responseData = response.data;
+      console.log(responseData);
+      if (responseData.status === "success") {
+        const userData = responseData.data.user;
+        // save user and token to local storage
+        dispatch({ type: "SET_USER_DATA", payload: userData }); // Update user data in the navbar
+        toast.success("Register success.");
+        navigate("/");
+      } else {
+        console.log("responseData error", responseData);
+      }
+      // console.log("REGISTER USER ===> ", res);
+
+      // navigate("/login");
     } catch (error) {
       console.log(error);
       if (error.response.data.error.statusCode === 401) {

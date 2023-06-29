@@ -30,17 +30,18 @@ const rootReducer = combineReducers({
 // Create the Redux store
 const store = createStore(rootReducer, composeWithDevTools());
 
+// Subscribe to changes in the Redux store and save user data to localStorage
+store.subscribe(() => {
+  const state = store.getState();
+  localStorage.setItem("userData", JSON.stringify(state.user));
+});
+
 // Load user data from localStorage and set it in the Redux store
 const userData = localStorage.getItem("userData");
 if (userData) {
   store.dispatch({ type: "SET_USER_DATA", payload: JSON.parse(userData) });
 }
 
-// Subscribe to changes in the Redux store and save user data to localStorage
-store.subscribe(() => {
-  const state = store.getState();
-  localStorage.setItem("userData", JSON.stringify(state.user));
-});
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
