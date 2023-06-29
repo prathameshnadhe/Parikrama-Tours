@@ -1,9 +1,10 @@
 import "./footer.css";
+import React from "react";
 import logo from "./../images/parikrama_footer_img.jpg";
 
 function Footer() {
   return (
-    <>
+    <React.Fragment>
       <footer className="footer">
         <div className="footer__logo">
           <img src={logo} alt="Parikrama logo" />
@@ -27,7 +28,7 @@ function Footer() {
         </ul>
         <p className="footer__copyright">&copy; by Prathamesh Nadhe.</p>
       </footer>
-    </>
+    </React.Fragment>
   );
 }
 

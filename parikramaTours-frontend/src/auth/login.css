@@ -1,13 +1,47 @@
-.bg-image-vertical {
-  position: relative;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: auto 100%;
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
 }
-
-@media (min-width: 1025px) {
-  .h-custom-2 {
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
     height: 100%;
   }
+}
+
+.form-control.ng-touched.ng-invalid {
+  border: 1px solid red;
+}
+
+.form-control.ng-touched.ng-valid {
+  border: 1px solid green;
+}
+
+.form-data {
+  font-size: 2.1rem;
+  margin: 2rem;
+  padding: 1rem;
+}
+
+.section-data {
+  margin: 3rem;
+}
+
+.h2-title {
+  font-size: 4rem;
+  font-weight: 551;
+  background: linear-gradient(to right, #7dd56f, #28b487);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.para-small {
+  margin-left: 14rem;
+  font-size: 1.3rem;
+  padding-top: 1.2rem;
 }

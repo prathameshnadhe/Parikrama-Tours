@@ -10,17 +10,15 @@ router.use('/:tourId/reviews', reviewRouter);
 // router.param('id', tourController.checkID);
 
 router
-  .route('/top-5-cheap')
+  .route('/top-6-cheap')
   .get(tourController.aliasTopTours, tourController.getAllTours);
 
 router.route('/tour-stats').get(tourController.getTourStats);
-router
-  .route('/monthly-plan/:year')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide', 'guide'),
-    tourController.getMonthlyPlan
-  );
+router.route('/monthly-plan/:year').get(
+  // authController.protect,
+  // authController.restrictTo('admin', 'lead-guide', 'guide'),
+  tourController.getMonthlyPlan
+);
 
 router
   .route('/tour-within/:distance/center/:latlng/unit/:unit')

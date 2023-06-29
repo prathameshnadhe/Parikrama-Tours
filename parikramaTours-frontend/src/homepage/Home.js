@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./home.css";
-import mapPin from "../images/icons/mapPin.svg";
-import calendar from "../images/icons/calendar.svg";
-import flag from "../images/icons/flag.svg";
-import user from "../images/icons/user.svg";
-import { ReactComponent as CalendarIcon } from "../images/icons/calendar.svg";
+import icons from "../images/icons.svg";
 
 // Import the entire 'tours' folder using require.context
 function importAll(r) {
@@ -16,14 +12,20 @@ function importAll(r) {
   return images;
 }
 
-const images = importAll(require.context("../images/tours"));
+const tourImages = importAll(require.context("../images/tours"));
 
 function Home() {
   const [tours, setTours] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/v1/tours");
+        let url = "http://localhost:8080/api/v1/tours";
+
+        // Check if the URL should be changed to "top-5-cheap"
+        if (window.location.href.includes("top-6-cheap")) {
+          url = "http://localhost:8080/api/v1/tours/top-6-cheap";
+        }
+        const response = await axios.get(url);
         setTours(response.data.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -31,9 +33,9 @@ function Home() {
     };
     fetchData();
   }, []);
-  // console.log(tours[0]);
+  console.log(tours);
   return (
-    <>
+    <div>
       <main className="main">
         <div className="container">
           <div className="row">
@@ -44,9 +46,9 @@ function Home() {
                     <div className="card__picture">
                       <div className="card__picture-overlay">&nbsp;</div>
                       <img
-                        className="card__picture-img"
+                        className="card__picture-img-cover"
                         key={tour.id}
-                        src={images[`${tour.imageCover}`]}
+                        src={tourImages[`${tour.imageCover}`]}
                         alt={`${tour.name}`}
                       />
                     </div>
@@ -59,30 +61,37 @@ function Home() {
                     <p className="card__text">{tour.summary}</p>
                     <div className="card__data">
                       <svg className="card__icon">
-                        <use xlinkHref={`${mapPin}#icon-map-pin`}></use>
+                        <use xlinkHref={`${icons}#icon-map-pin`}></use>
                       </svg>
                       <span>{tour.startLocation.description}</span>
                     </div>
                     <div className="card__data">
                       <svg className="card__icon">
-                        <use xlinkHref={`#${calendar.id}`} />
+                        <use xlinkHref={`${icons}#icon-calendar`}></use>
                       </svg>
                       <span>
-                        {new Date(tour.startDates[0]).toLocaleString("en-us", {
-                          month: "long",
-                          year: "numeric",
-                        })}
+                        {tour.startDates[0] && (
+                          <span className="overview-box__text">
+                            {new Date(tour.startDates[0]).toLocaleString(
+                              "en-us",
+                              {
+                                month: "long",
+                                year: "numeric",
+                              }
+                            )}
+                          </span>
+                        )}
                       </span>
                     </div>
                     <div className="card__data">
                       <svg className="card__icon">
-                        <use xlinkHref={`${flag}#icon-flag`}></use>
+                        <use xlinkHref={`${icons}#icon-flag`}></use>
                       </svg>
                       <span>{`${tour.locations.length} stops`}</span>
                     </div>
                     <div className="card__data">
                       <svg className="card__icon">
-                        <use xlinkHref={`${user}#icon-user`}></use>
+                        <use xlinkHref={`${icons}#icon-user`}></use>
                       </svg>
                       <span>{`${tour.maxGroupSize} people`}</span>
                     </div>
@@ -96,7 +105,7 @@ function Home() {
                       <span className="card__footer-value">
                         {tour.ratingsAverage}
                       </span>
-                      <span className="card__footer-text">{`rating (${tour.ratingsQuantity})`}</span>
+                      <span className="card__footer-text">{` rating (${tour.ratingsQuantity})`}</span>
                     </p>
                     <a
                       className="btn btn--green btn--small"
@@ -112,7 +121,7 @@ function Home() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

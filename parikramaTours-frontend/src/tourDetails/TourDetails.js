@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./tourDetails.css";
+import logo from "./../images/parikrama_logo.jpg";
+import icons from "../images/icons.svg";
+import { useSelector } from "react-redux";
 
 // Import the entire 'tours' folder using require.context
 function importAll(r) {
@@ -12,19 +15,20 @@ function importAll(r) {
   return images;
 }
 
-const tourCoverImage = importAll(require.context("../images/tours"));
-const guidesImage = importAll(require.context("../images/users"));
+const tourImages = importAll(require.context("../images/tours"));
+const userImage = importAll(require.context("../images/users"));
 
 function TourDetails() {
   const [tour, setTour] = useState({});
   const [error, setError] = useState(false);
   const { id } = useParams();
+  const userData = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/tours/${id}}`
+          `http://localhost:8080/api/v1/tours/${id}`
         );
         setTour(response.data.data.data);
       } catch (error) {
@@ -41,14 +45,14 @@ function TourDetails() {
   }
 
   return (
-    <>
+    <div>
       <section className="section-header">
         <div className="header__hero">
           <div className="header__hero-overlay">&nbsp;</div>
           <img
-            className="card__picture-img"
+            className="card__picture-img-cover"
             key={tour.id}
-            src={tourCoverImage[`${tour.imageCover}`]}
+            src={tourImages[`${tour.imageCover}`]}
             alt={`${tour.name}`}
           />
         </div>
@@ -60,7 +64,7 @@ function TourDetails() {
           <div className="heading-box__group">
             <div className="heading-box__detail">
               <svg className="heading-box__icon">
-                <use xlinkHref="/img/icons.svg#icon-clock"></use>
+                <use xlinkHref={`${icons}#icon-clock`}></use>
               </svg>
               <span className="heading-box__text">
                 {tour.duration}-day tour
@@ -68,10 +72,10 @@ function TourDetails() {
             </div>
             <div className="heading-box__detail">
               <svg className="heading-box__icon">
-                <use xlinkHref="/img/icons.svg#icon-map-pin"></use>
+                <use xlinkHref={`${icons}#icon-map-pin`}></use>
               </svg>
               <span className="heading-box__text">
-                {tour.startLocation.description}
+                {tour && tour.startLocation && tour.startLocation.description}
               </span>
             </div>
           </div>
@@ -85,26 +89,28 @@ function TourDetails() {
               <h2 className="heading-secondary ma-bt-lg">Quick facts</h2>
               <div className="overview-box__detail">
                 <svg className="overview-box__icon">
-                  <use xlinkHref="/img/icons.svg#icon-calendar"></use>
+                  <use xlinkHref={`${icons}#icon-calendar`}></use>
                 </svg>
                 <span className="overview-box__label">Next date</span>
-                <span className="overview-box__text">
-                  {new Date(tour.startDates[0]).toLocaleString("en-us", {
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </span>
+                {tour && tour.startDates && tour.startDates[0] && (
+                  <span className="overview-box__text">
+                    {new Date(tour.startDates[0]).toLocaleString("en-us", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                )}
               </div>
               <div className="overview-box__detail">
                 <svg className="overview-box__icon">
-                  <use xlinkHref="/img/icons.svg#icon-trending-up"></use>
+                  <use xlinkHref={`${icons}#icon-trending-up`}></use>
                 </svg>
                 <span className="overview-box__label">Difficulty</span>
                 <span className="overview-box__text">{tour.difficulty}</span>
               </div>
               <div className="overview-box__detail">
                 <svg className="overview-box__icon">
-                  <use xlinkHref="/img/icons.svg#icon-user"></use>
+                  <use xlinkHref={`${icons}#icon-user`}></use>
                 </svg>
                 <span className="overview-box__label">Participants</span>
                 <span className="overview-box__text">
@@ -113,7 +119,7 @@ function TourDetails() {
               </div>
               <div className="overview-box__detail">
                 <svg className="overview-box__icon">
-                  <use xlinkHref="/img/icons.svg#icon-star"></use>
+                  <use xlinkHref={`${icons}#icon-star`}></use>
                 </svg>
                 <span className="overview-box__label">Rating</span>
                 <span className="overview-box__text">
@@ -124,61 +130,60 @@ function TourDetails() {
 
             <div className="overview-box__group">
               <h2 className="heading-secondary ma-bt-lg">Your tour guides</h2>
-              {tour.guides.map((guide) => (
-                <div className="overview-box__detail" key={guide.id}>
-                  <img
-                    className="overview-box__img"
-                    src={guidesImage[`${guide.photo}`]}
-                    alt={guide.name}
-                  />
-                  <span className="overview-box__label">
-                    {guide.role === "lead-guide" ? "Lead guide" : "Tour guide"}
-                  </span>
-                  <span className="overview-box__text">{guide.name}</span>
-                </div>
-              ))}
+              {tour &&
+                tour.images &&
+                tour.images.length > 0 &&
+                tour.guides.map((guide) => (
+                  <div className="overview-box__detail" key={guide.id}>
+                    <img
+                      className="overview-box__img"
+                      src={userImage[`${guide.photo}`]}
+                      alt={guide.name}
+                    />
+                    <span className="overview-box__label">
+                      {guide.role === "lead-guide"
+                        ? "Lead guide"
+                        : "Tour guide"}
+                    </span>
+                    <span className="overview-box__text">{guide.name}</span>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
 
         <div className="description-box">
           <h2 className="heading-secondary ma-bt-lg">About {tour.name}</h2>
-          <p className="description__text">
-            {tour.description.includes("\n")
-              ? tour.description.split("\n").map((paragraph, index) => (
-                  <div key={index}>
-                    {paragraph}
-                    <br />
-                    <br />
-                  </div>
-                ))
-              : tour.description}
-          </p>
+          {tour && tour.description && (
+            <p className="description__text">
+              {tour.description.includes("\n")
+                ? tour.description.split("\n").map((paragraph, index) => (
+                    <div key={index}>
+                      {paragraph}
+                      <br />
+                      <br />
+                    </div>
+                  ))
+                : tour.description}
+            </p>
+          )}
         </div>
       </section>
 
       <section className="section-pictures">
-        <div className="picture-box">
-          <img
-            className="picture-box__img picture-box__img--1"
-            src="/img/tour-5-1.jpg"
-            alt="The Park Camper Tour 1"
-          />
-        </div>
-        <div className="picture-box">
-          <img
-            className="picture-box__img picture-box__img--2"
-            src="/img/tour-5-2.jpg"
-            alt="The Park Camper Tour 2"
-          />
-        </div>
-        <div className="picture-box">
-          <img
-            className="picture-box__img picture-box__img--3"
-            src="/img/tour-5-3.jpg"
-            alt="The Park Camper Tour 3"
-          />
-        </div>
+        {tour &&
+          tour.images &&
+          tour.images.length > 0 &&
+          tour.images.map((images) => (
+            <div className="picture-box">
+              <img
+                className="card__picture-img"
+                key={tour.id}
+                src={tourImages[`${images}`]}
+                alt={`${tour.name}`}
+              />
+            </div>
+          ))}
       </section>
 
       {/* <section className="section-map">
@@ -187,65 +192,67 @@ function TourDetails() {
 
       <section className="section-reviews">
         <div className="reviews">
-          <div className="reviews__card">
-            <div className="reviews__avatar">
-              <img
-                className="reviews__avatar-img"
-                src="/img/users/user-7.jpg"
-                alt="Jim Brown"
-              />
-              <h6 className="reviews__user">Jim Brown</h6>
-            </div>
-            <p className="reviews__text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-              dignissimos sint quo commodi corrupti accusantium veniam saepe
-              numquam.
-            </p>
-            <div className="reviews__rating">
-              <svg className="reviews__star reviews__star--active">
-                <use xlinkHref="/img/icons.svg#icon-star"></use>
-              </svg>
-              <svg className="reviews__star reviews__star--active">
-                <use xlinkHref="/img/icons.svg#icon-star"></use>
-              </svg>
-              <svg className="reviews__star reviews__star--active">
-                <use xlinkHref="/img/icons.svg#icon-star"></use>
-              </svg>
-              <svg className="reviews__star reviews__star--active">
-                <use xlinkHref="/img/icons.svg#icon-star"></use>
-              </svg>
-              <svg className="reviews__star reviews__star--active">
-                <use xlinkHref="/img/icons.svg#icon-star"></use>
-              </svg>
-            </div>
-          </div>
+          {tour &&
+            tour.images &&
+            tour.images.length > 0 &&
+            tour.reviews.map((review) => (
+              <div className="reviews__card">
+                <div className="reviews__avatar">
+                  <img
+                    className="card__picture-img-user"
+                    key={tour.id}
+                    src={userImage[`${review.user.photo}`]}
+                    alt={`${tour.name}`}
+                  />
+                  <h6 className="reviews__user">{review.user.name}</h6>
+                </div>
+                <p className="reviews__text">{review.review}</p>
+                <div className="reviews__rating">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg
+                      key={star}
+                      className={`reviews__star reviews__star--${
+                        review.rating >= star ? "active" : "inactive"
+                      }`}
+                    >
+                      <use xlinkHref={`${icons}#icon-star`} />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+            ))}
         </div>
       </section>
 
       <section className="section-cta">
         <div className="cta">
           <div className="cta__img cta__img--logo">
-            <img src="/img/logo-white.png" alt="Natours logo" />
+            <img src={logo} alt="Parikrama_Logo" />
           </div>
-          <img
-            className="cta__img cta__img--1"
-            src="/img/tour-5-2.jpg"
-            alt=""
-          />
-          <img
-            className="cta__img cta__img--2"
-            src="/img/tour-5-1.jpg"
-            alt=""
-          />
+          {tour && tour.images && tour.images.length > 0 && (
+            <div>
+              <img
+                className="cta__img cta__img--1"
+                src={tourImages[tour.images[1]]}
+                alt={tour.name}
+              />
+              <img
+                className="cta__img cta__img--2"
+                src={tourImages[tour.images[0]]}
+                alt={tour.name}
+              />
+            </div>
+          )}
           <div className="cta__content">
             <h2 className="heading-secondary">What are you waiting for?</h2>
             <p className="cta__text">
-              10 days. 1 adventure. Infinite memories. Make it yours today!
+              {tour.duration} days. 1 adventure. Infinite memories. Make it
+              yours today!
             </p>
-            <button className="btn btn--green span-all-rows">
+            {/* <button className="btn btn--green span-all-rows">
               Book tour now!
-            </button>
-            {/* {user ? (
+            </button> */}
+            {userData ? (
               <button className="btn btn--green span-all-rows">
                 Book tour now!
               </button>
@@ -253,11 +260,11 @@ function TourDetails() {
               <a className="btn btn--green span-all-rows" href="/login">
                 Login to book tour
               </a>
-            )} */}
+            )}
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 
