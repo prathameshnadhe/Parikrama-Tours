@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
-import logo from "./../images/parikrama_logo.jpg";
+import logo from "./../images/prikrama-tours-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 
 // Import the entire 'tours' folder using require.context
@@ -33,65 +33,130 @@ function Navbar() {
   return (
     <React.Fragment>
       <header>
-        <nav className="navbar navbar-expand-lg navbar-light">
+        <nav className="navbar navbar-expand-lg float-left">
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">
-              All Tours
+            <a href="/" className="text-black">
+              <img className="navbar-logo" src={logo} alt="Parikrama logo" />
             </a>
           </div>
         </nav>
-        <div className="navbar-logo">
-          <img src={logo} alt="Parikrama_Logo" />
-        </div>
-        <nav className="navbar navbar-expand-lg navbar-light">
-          <div className="collapse navbar-collapse d-flex justify-content-end">
+        <nav className="navbar navbar-expand-lg  float-right">
+          <div className="collapse navbar-collapse">
             <ul className="navbar-nav">
-              <div className="dropdown dropdown-hover">
-                <button
-                  className="btn1"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Tour Plans
-                </button>
-                <ul
-                  className="dropdown-menu"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <li>
-                    <a className="dropdown-item" href="/top-6-cheap">
-                      Top 6 Affordable Tours
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/monthly-plan/2023">
-                      Monthly Plan Tours
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              {userData && userData.name ? (
-                <React.Fragment>
+              {userData ? (
+                <div className="user-nav">
                   <li className="nav-item">
-                    <span className="btn1">{userData.name.split(" ")[0]}</span>
+                    <Link className="btn1" to="/">
+                      All Tours
+                    </Link>
                   </li>
-                  <li className="nav-item">
-                    <img
-                      src={userImage[`${userData.photo}`]}
-                      alt={userData.name}
-                      className="card__picture-img-user-nav"
-                    />
-                  </li>
-                  <li className="nav-item">
-                    <button className="btn1" onClick={handleLogout}>
-                      Log out
+                  <div className="dropdown dropdown-hover">
+                    <button
+                      className="btn1"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Tour Plans
                     </button>
-                  </li>
-                </React.Fragment>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <li>
+                        <a className="dropdown-item" href="/top-6-cheap">
+                          Top 6 Affordable Tours
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item" href="/monthly-plan/2023">
+                          Monthly Plan Tours
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="dropdown dropdown-hover">
+                    <button
+                      className="btn2 btn1 btn-trans"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <img
+                        src={userImage[`${userData.photo}`]}
+                        alt={userData.name}
+                        className="card__picture-img-user-nav"
+                      />
+                    </button>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <li>
+                        <Link to="#" className="dropdown-item">
+                          Edit Profile
+                        </Link>
+                      </li>
+                      <li>
+                        {userData.role === "user" && (
+                          <Link to="#" className="dropdown-item">
+                            Booked Tours
+                          </Link>
+                        )}
+                      </li>
+                      <li>
+                        {(userData.role === "admin" || "lead-guide") && (
+                          <Link to="/add-tours" className="dropdown-item">
+                            Add Tours
+                          </Link>
+                        )}
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               ) : (
                 <React.Fragment>
+                  <li className="nav-item">
+                    <Link className="btn1" to="/">
+                      All Tours
+                    </Link>
+                  </li>
+                  <div className="dropdown dropdown-hover">
+                    <button
+                      className="btn1"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Tour Plans
+                    </button>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <li>
+                        <a className="dropdown-item" href="/top-6-cheap">
+                          Top 6 Affordable Tours
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item" href="/monthly-plan/2023">
+                          Monthly Plan Tours
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                   <li className="nav-item">
                     <Link className="btn1" to="/login">
                       Log in

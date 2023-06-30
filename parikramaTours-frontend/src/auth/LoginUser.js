@@ -133,7 +133,7 @@ function LoginUser() {
                   }}
                   disabled={!email || !password}
                 >
-                  Log in
+                  Login
                 </button>
                 &nbsp;
                 <div className="para-small">

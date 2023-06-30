@@ -170,7 +170,7 @@ function SignupUser() {
                   }}
                   disabled={!email || !password || !name || !passwordConfirm}
                 >
-                  Log in
+                  Signup
                 </button>
                 <p className="para-small">
                   Do you have an account?
