@@ -22,7 +22,6 @@ const randomImageKey = imageKeys[randomIndex];
 const randomImageSrc = tourImages[randomImageKey];
 
 function ResetPassword() {
-  const dispatch = useDispatch();
   const [password, setPassword] = useState("");
   const [passwordConfirm, setpasswordConfirm] = useState("");
   const { token } = useParams();
@@ -56,10 +55,6 @@ function ResetPassword() {
       }
     }
   };
-
-  //   const handleLoginClick = () => {
-  //     navigate("/login");
-  //   };
 
   return (
     <section className="section-data">

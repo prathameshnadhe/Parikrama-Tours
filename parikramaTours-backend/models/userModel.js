@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
+    // name: String,
+    // data: Buffer,
+    // contentType: String,
     default: 'default.jpg',
   },
   role: {

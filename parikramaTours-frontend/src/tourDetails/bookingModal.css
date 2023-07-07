@@ -1,0 +1,96 @@
+.custom-modal {
+  max-width: 80rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.custom-header {
+  font-size: 2rem;
+}
+
+.custom-modal-body {
+  font-size: 2rem;
+  padding: 0.8rem 1.2rem;
+}
+
+.custom-modal-body-1 {
+  font-size: 1.8rem;
+  padding: 0.8rem 1.2rem;
+}
+
+.quantity-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 2rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  position: relative;
+}
+
+.quantity-input input {
+  border: none;
+  outline: none;
+  width: 100%;
+  text-align: center;
+}
+
+.quantity-input button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.quantity-input button i {
+  color: #6c757d;
+}
+
+.quantity-input button:disabled i {
+  color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.custom-img {
+  width: 100%;
+  height: 70%;
+}
+
+.table-custom {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-custom td {
+  border: none;
+}
+
+.table-custom tbody tr:hover {
+  background-color: transparent;
+}
+
+.select {
+  appearance: none;
+  background-color: #fff;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.4rem;
+  /* padding: 0.8rem 1.2rem; */
+  font-size: 1.4rem;
+  line-height: 1.5;
+  width: 16rem;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

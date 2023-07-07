@@ -7,7 +7,7 @@ const router = express.Router({ mergeParams: true });
 // POST /tours/143saf2/reviews
 // GET /tours/143saf2/reviews
 
-router.use(authController.protect);
+// router.use(authController.protect);
 
 router
   .route('/')
@@ -21,7 +21,13 @@ router
 router
   .route('/:id')
   .get(reviewController.getReview)
-  .patch(authController.restrictTo('user', 'admin'), reviewController.updateReview)
-  .delete(authController.restrictTo('user', 'admin'), reviewController.deleteReview);
+  .patch(
+    authController.restrictTo('user', 'admin'),
+    reviewController.updateReview
+  )
+  .delete(
+    authController.restrictTo('user', 'admin'),
+    reviewController.deleteReview
+  );
 
 module.exports = router;

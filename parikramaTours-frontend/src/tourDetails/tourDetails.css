@@ -45,7 +45,7 @@ body {
 
 .main {
   background-color: #f7f7f7;
-  padding: 8rem 6rem;
+  padding: 6rem 6rem;
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -236,8 +236,18 @@ body {
   background-color: #55c57a;
   color: #fff;
 }
+
 .btn--green::after {
   background-color: #55c57a;
+}
+
+.btn--red {
+  background-color: #df3232;
+  color: #fff;
+}
+
+.btn--red::after {
+  background-color: #df3232;
 }
 
 .btn--small {
@@ -876,14 +886,14 @@ body {
   padding: 2.5rem 3rem;
 }
 .card__sub-heading {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 600;
   grid-column: 1 / -1;
 }
 .card__text {
   grid-column: 1 / -1;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-style: italic;
   margin-top: -1rem;
   margin-bottom: 0.75rem;
@@ -1004,6 +1014,42 @@ body {
 }
 .form__input::-webkit-input-placeholder {
   color: #bbb;
+}
+
+/* Styles for textarea */
+.form__textarea {
+  display: block;
+  font-family: inherit;
+  font-size: 1.5rem;
+  color: inherit;
+  padding: 1.25rem 1.75rem;
+  border: none;
+  width: 100%;
+  background-color: #fff;
+  background-color: #f2f2f2;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical; /* Allows vertical resizing */
+}
+
+.form__textarea:focus {
+  outline: none;
+  border-bottom: 3px solid #55c57a;
+}
+
+.form__textarea:focus:invalid {
+  border-bottom: 3px solid #ff7730;
+}
+
+.form__textarea::-webkit-input-placeholder {
+  color: #bbb;
+}
+
+.form__textarea-size {
+  height: 20rem;
 }
 
 .form__group:not(:last-child) {

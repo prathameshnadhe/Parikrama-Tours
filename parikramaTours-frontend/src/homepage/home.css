@@ -183,6 +183,11 @@
   background-color: #fff;
 }
 
+.btn--yellow {
+  background-color: #e9d015;
+  color: #fff;
+}
+
 .btn--green {
   background-color: #55c57a;
   color: #fff;
@@ -254,4 +259,35 @@
 .row {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 1.5rem;
+}
+
+.vertical-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+}
+
+.vertical-button .btn {
+  margin-top: 0.5rem;
+}
+
+/* Responsive Layout */
+@media screen and (min-width: 665px) and (max-width: 990px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    min-width: 25rem;
+    max-width: 30rem;
+  }
+
+  .card__text {
+    font-size: 0.7rem;
+  }
+
+  .card__data {
+    font-size: 0.8rem;
+  }
 }

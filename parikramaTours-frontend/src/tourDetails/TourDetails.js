@@ -5,8 +5,8 @@ import "./tourDetails.css";
 import logo from "./../images/parikrama_logo.jpg";
 import icons from "../images/icons.svg";
 import { useSelector } from "react-redux";
+import BookingModal from "./BookingModal";
 
-// Import the entire 'tours' folder using require.context
 function importAll(r) {
   let images = {};
   r.keys().forEach((item, index) => {
@@ -23,6 +23,8 @@ function TourDetails() {
   const [error, setError] = useState(false);
   const { id } = useParams();
   const userData = useSelector((state) => state.user);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTourId, setSelectedTourId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,11 +40,20 @@ function TourDetails() {
     };
     fetchData();
   }, [id]);
-  console.log("Tour:", tour);
 
   if (error) {
     return <div>Error loading tour data. Please try again later.</div>;
   }
+
+  const handleBookingTourClick = (id) => {
+    setSelectedTourId(id);
+    setShowModal(true);
+  };
+  console.log("selectedTourId :", selectedTourId);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <div>
@@ -51,8 +62,7 @@ function TourDetails() {
           <div className="header__hero-overlay">&nbsp;</div>
           <img
             className="card__picture-img-cover"
-            key={tour.id}
-            src={tourImages[`${tour.imageCover}`]}
+            src={`${tourImages[tour.imageCover]}`}
             alt={`${tour.name}`}
           />
         </div>
@@ -174,8 +184,8 @@ function TourDetails() {
         {tour &&
           tour.images &&
           tour.images.length > 0 &&
-          tour.images.map((images) => (
-            <div className="picture-box">
+          tour.images.map((images, index) => (
+            <div className="picture-box" key={index}>
               <img
                 className="card__picture-img"
                 key={tour.id}
@@ -196,17 +206,18 @@ function TourDetails() {
             tour.images &&
             tour.images.length > 0 &&
             tour.reviews.map((review) => (
-              <div className="reviews__card">
+              <div className="reviews__card" key={review.id}>
                 <div className="reviews__avatar">
                   <img
                     className="card__picture-img-user"
-                    key={tour.id}
                     src={userImage[`${review.user.photo}`]}
                     alt={`${tour.name}`}
                   />
                   <h6 className="reviews__user">{review.user.name}</h6>
                 </div>
-                <p className="reviews__text">{review.review}</p>
+                <p className="reviews__text" key={review.id}>
+                  {review.review}
+                </p>
                 <div className="reviews__rating">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <svg
@@ -249,13 +260,22 @@ function TourDetails() {
               {tour.duration} days. 1 adventure. Infinite memories. Make it
               yours today!
             </p>
-            {/* <button className="btn btn--green span-all-rows">
-              Book tour now!
-            </button> */}
             {userData ? (
-              <button className="btn btn--green span-all-rows">
-                Book tour now!
-              </button>
+              userData.role === "admin" || userData.role === "lead-guide" ? (
+                <a
+                  className="btn btn--green span-all-rows"
+                  href={`/tour-update/${tour.id}`}
+                >
+                  Update Tour
+                </a>
+              ) : (
+                <a
+                  className="btn btn--green span-all-rows"
+                  onClick={() => handleBookingTourClick(id)}
+                >
+                  Book tour now!
+                </a>
+              )
             ) : (
               <a className="btn btn--green span-all-rows" href="/login">
                 Login to book tour
@@ -264,6 +284,9 @@ function TourDetails() {
           </div>
         </div>
       </section>
+      {showModal && (
+        <BookingModal tourId={selectedTourId} closeModal={closeModal} />
+      )}
     </div>
   );
 }

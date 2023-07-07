@@ -96,23 +96,6 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
-exports.verifyUser = catchAsync(async (req, res, next) => {
-  // 1) Get user based on POSTed email
-  const user = await User.findOne({ email: req.body.email });
-
-  console.log('user : ', user);
-
-  res.status(200);
-  res.json({
-    status: 'success',
-    data: {
-      user,
-    },
-  });
-
-  next();
-});
-
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check of it's there
   let token;
@@ -234,7 +217,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   const htmlMessage = `
     <p>Forgot your password? Click the link below to reset your password:</p>
-    <p><a href="${resetURL}">${resetURL}</a></p>
+    <p><a href="${resetURL}">Reset Your Password</a></p>
     <p>If you didn't forget your password, please ignore this email!</p>
   `;
 
@@ -307,11 +290,18 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.body.id).select('+password');
+
+  // const user = await User.findOne({ email: req.body.email });
 
   // 2) Check if POSTed current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppErrorHandling('Your current password is wrong', 401));
+  }
+
+  // 3) Check if POSTed  password and passwordConfirm is same
+  if (req.body.password !== req.body.passwordConfirm) {
+    return next(new AppErrorHandling('Password do nat match!', 401));
   }
 
   // 3) If so, update password

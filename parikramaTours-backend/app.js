@@ -6,6 +6,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 
 const AppErrorHandling = require('./utils/appErrorHandling');
 const globalErrorhandler = require('./controllers/errorController');
@@ -76,6 +78,9 @@ app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/booking', bookingRouter);
+
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.all('*', (req, res, next) => {
   next(

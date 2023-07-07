@@ -63,17 +63,18 @@ function Navbar() {
                     <ul
                       className="dropdown-menu"
                       aria-labelledby="dropdownMenuButton"
+                      style={{ textAlign: "center" }}
                     >
                       <li>
                         <a className="dropdown-item" href="/top-6-cheap">
                           Top 6 Affordable Tours
                         </a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a className="dropdown-item" href="/monthly-plan/2023">
                           Monthly Plan Tours
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                   <div className="dropdown dropdown-hover">
@@ -93,10 +94,16 @@ function Navbar() {
                     <ul
                       className="dropdown-menu"
                       aria-labelledby="dropdownMenuButton"
+                      style={{ textAlign: "center" }}
                     >
                       <li>
-                        <Link to="#" className="dropdown-item">
-                          Edit Profile
+                        <Link to="/user-profile" className="dropdown-item">
+                          {userData.name}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/user-profile" className="dropdown-item">
+                          Settings
                         </Link>
                       </li>
                       <li>
@@ -107,8 +114,9 @@ function Navbar() {
                         )}
                       </li>
                       <li>
-                        {(userData.role === "admin" || "lead-guide") && (
-                          <Link to="/add-tours" className="dropdown-item">
+                        {(userData.role === "admin" ||
+                          userData.role === "lead-guide") && (
+                          <Link to="/add-tour" className="dropdown-item">
                             Add Tours
                           </Link>
                         )}
@@ -150,11 +158,11 @@ function Navbar() {
                           Top 6 Affordable Tours
                         </a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a className="dropdown-item" href="/monthly-plan/2023">
                           Monthly Plan Tours
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                   <li className="nav-item">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./home.css";
 import icons from "../images/icons.svg";
+import { useSelector } from "react-redux";
 
 // Import the entire 'tours' folder using require.context
 function importAll(r) {
@@ -15,6 +16,7 @@ function importAll(r) {
 const tourImages = importAll(require.context("../images/tours"));
 
 function Home() {
+  const userData = useSelector((state) => state.user);
   const [tours, setTours] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -96,25 +98,69 @@ function Home() {
                       <span>{`${tour.maxGroupSize} people`}</span>
                     </div>
                   </div>
-                  <div className="card__footer">
-                    <p>
-                      <span className="card__footer-value">{`₹${tour.price}`}</span>
-                      <span className="card__footer-text"> per person</span>
-                    </p>
-                    <p className="card__ratings">
-                      <span className="card__footer-value">
-                        {tour.ratingsAverage}
-                      </span>
-                      <span className="card__footer-text">{` rating (${tour.ratingsQuantity})`}</span>
-                    </p>
-                    <a
-                      className="btn btn--green btn--small"
-                      // href={`/tour/${tour.slug}`}
-                      href={`/tour-details/${tour.id}`}
-                    >
-                      Details
-                    </a>
-                  </div>
+                  {userData &&
+                  (userData.role === "admin" ||
+                    userData.role === "lead-guide") ? (
+                    <div className="card__footer">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <span className="card__footer-value">{`₹${tour.price}`}</span>
+                          <span className="card__footer-text"> per person</span>
+                        </div>
+                        <div className="col-md-12 card__ratings">
+                          <span className="card__footer-value">
+                            {tour.ratingsAverage}
+                          </span>
+                          <span className="card__footer-text">{` rating (${tour.ratingsQuantity})`}</span>
+                        </div>
+                      </div>
+                      <div className="row" style={{ alignItems: "center" }}>
+                        <div className="col-md-12">
+                          <a
+                            className="btn btn--green btn--small"
+                            // href={`/tour/${tour.slug}`}
+                            href={`/tour-details/${tour.id}`}
+                          >
+                            Details
+                          </a>
+                        </div>
+                        <div className="col-md-12">
+                          {((userData && userData.role === "admin") ||
+                            "lead-guide") && (
+                            <div className="vertical-button">
+                              <a
+                                className="btn btn--yellow btn--small"
+                                // href={`/tour/${tour.slug}`}
+                                href={`/tour-update/${tour.id}`}
+                              >
+                                Update
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="card__footer">
+                      <p>
+                        <span className="card__footer-value">{`₹${tour.price}`}</span>
+                        <span className="card__footer-text"> per person</span>
+                      </p>
+                      <p className="card__ratings">
+                        <span className="card__footer-value">
+                          {tour.ratingsAverage}
+                        </span>
+                        <span className="card__footer-text">{` rating (${tour.ratingsQuantity})`}</span>
+                      </p>
+                      <a
+                        className="btn btn--green btn--small"
+                        // href={`/tour/${tour.slug}`}
+                        href={`/tour-details/${tour.id}`}
+                      >
+                        Details
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
