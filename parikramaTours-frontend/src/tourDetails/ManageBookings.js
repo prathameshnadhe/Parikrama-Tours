@@ -1,34 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../tourDetails/css/manageTours.css";
+import "./css/manageTours.css";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import SideNav from "../navbar/SideNav";
 
-function UserReviews() {
+function ManageBookings() {
   const user = useSelector((state) => state.user);
-  const [userId, setUserId] = useState(user ? user._id : "");
-  const [reviewData, setReviewData] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [error, setError] = useState(false);
-  const [tourName, setTourName] = useState("");
-
-  useEffect(() => {
-    if (user) {
-      setUserId(user._id);
-    }
-  }, [user]);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/reviews`
+          `http://localhost:8080/api/v1/booking`
         );
-        console.log("response: ", response.data.data.data);
-        const filteredReviews = response.data.data.data.filter(
-          (review) => review.user._id === userId
-        );
-        console.log("filteredReviews: ", filteredReviews);
-        setReviewData(filteredReviews);
+        setBookings(response.data.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(true);
@@ -40,23 +29,23 @@ function UserReviews() {
   useEffect(() => {
     const fetchTourNames = async () => {
       try {
-        if (reviewData.length === 0) {
+        if (bookings.length === 0) {
           // No reviews available, return early
           return;
         }
 
-        const tourIds = reviewData.map((review) => review.tour);
-        const requests = tourIds.map((tourId) =>
-          fetch(`http://localhost:8080/api/v1/tours/${tourId}`)
+        const userIds = bookings.map((booking) => booking.userId);
+        const requests = userIds.map((userId) =>
+          fetch(`http://localhost:8080/api/v1/users/${userId}`)
         );
         const responses = await Promise.all(requests);
 
-        const tours = await Promise.all(
+        const users = await Promise.all(
           responses.map((response) => response.json())
         );
 
-        const tourNames = tours.map((tour) => tour.data.data.name);
-        setTourName(tourNames);
+        const userNames = users.map((user) => user.data.data.name);
+        setUserName(userNames);
       } catch (error) {
         console.error(error);
         // Handle error case
@@ -64,22 +53,23 @@ function UserReviews() {
     };
 
     fetchTourNames();
-  }, [reviewData]);
+  }, [bookings]);
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteBooking = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete review? This action cannot be undone."
+      "Are you sure you want to cancel this booking? This action cannot be undone."
     );
     if (!confirmDelete) {
       return;
     }
     try {
-      await axios.delete(`http://localhost:8080/api/v1/reviews/${id}`, {
+      await axios.delete(`http://localhost:8080/api/v1/booking/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      toast.success("Review has been deleted");
+      toast.success("Booking has been canceled");
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +84,7 @@ function UserReviews() {
         <div className="user-view__content">
           <div className="event-schedule-area-two bg-color pad100">
             <div className="container">
-              <h1 className="h1-title">You Reviews</h1>
+              <h1 className="h1-title">Tour Bookings</h1>
               <div className="row">
                 <div className="col-lg-12">
                   <div className="tab-content" id="myTabContent">
@@ -103,7 +93,7 @@ function UserReviews() {
                       id="home"
                       role="tabpanel"
                     >
-                      {reviewData.length > 0 && (
+                      {bookings.length > 0 && (
                         <div className="table-responsive">
                           <table className="table">
                             <thead>
@@ -112,44 +102,72 @@ function UserReviews() {
                                   className="text-center title-list"
                                   scope="col"
                                 >
-                                  Tour
+                                  User Name
                                 </th>
                                 <th
                                   className="text-center title-list"
                                   scope="col"
                                 >
-                                  Review
+                                  Tour Name
                                 </th>
                                 <th
                                   className="text-center title-list"
                                   scope="col"
                                 >
-                                  Ratings
+                                  Start Date
                                 </th>
                                 <th
                                   className="text-center title-list"
                                   scope="col"
                                 >
-                                  Delete Review
+                                  Members
+                                </th>
+                                <th
+                                  className="text-center title-list"
+                                  scope="col"
+                                >
+                                  Total Price
+                                </th>
+                                <th
+                                  className="text-center title-list"
+                                  scope="col"
+                                >
+                                  Cancel Booking
                                 </th>
                               </tr>
                             </thead>
                             <tbody>
-                              {reviewData.map((review, index) => (
-                                <tr key={review._id} className="inner-box">
+                              {bookings.map((booking, index) => (
+                                <tr key={booking._id} className="inner-box">
                                   <td>
                                     <div className="text-user">
-                                      {tourName[index]}
+                                      {userName[index]}
+                                    </div>
+                                  </td>
+                                  <th scope="row">
+                                    <div className="text-user">
+                                      {booking.tourName}
+                                    </div>
+                                  </th>
+                                  <td>
+                                    <div className="text-user">
+                                      {new Date(
+                                        booking.startDate
+                                      ).toLocaleDateString("en-US", {
+                                        month: "long",
+                                        day: "numeric",
+                                        year: "numeric",
+                                      })}
                                     </div>
                                   </td>
                                   <td>
                                     <div className="text-user">
-                                      {review.review}
+                                      {booking.members}
                                     </div>
                                   </td>
                                   <td>
                                     <div className="text-user">
-                                      {review.rating}
+                                      {booking.totalPrice}
                                     </div>
                                   </td>
                                   <td>
@@ -158,10 +176,10 @@ function UserReviews() {
                                         className="btn btn--small btn--red "
                                         type="button"
                                         onClick={() =>
-                                          handleDeleteUser(review._id)
+                                          handleDeleteBooking(booking._id)
                                         }
                                       >
-                                        Delete Review
+                                        Cancel Booking
                                       </button>
                                     </div>
                                   </td>
@@ -171,8 +189,8 @@ function UserReviews() {
                           </table>
                         </div>
                       )}
-                      {reviewData.length === 0 && (
-                        <p className="no-data">You did not review any tour.</p>
+                      {bookings.length === 0 && (
+                        <p className="no-data">There are no tour bookings.</p>
                       )}
                     </div>
                   </div>
@@ -186,4 +204,4 @@ function UserReviews() {
   );
 }
 
-export default UserReviews;
+export default ManageBookings;

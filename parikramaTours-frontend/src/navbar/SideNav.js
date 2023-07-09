@@ -1,5 +1,6 @@
 import React from "react";
 import icons from "../images/icons.svg";
+import "../auth/css/updateUser.css";
 
 const navItem = (link, text, icon, active) => (
   <li className={`${active ? "side-nav--active" : ""} li-update`}>
@@ -28,7 +29,7 @@ const SideNav = ({ isAdmin }) => {
             {navItem("/manage-tours/2023", "Manage tours", "map")}
             {navItem("/manage-users", "Manage users", "users")}
             {navItem("/manage-reviews", "Manage reviews", "star")}
-            {navItem("#", "Manage bookings", "briefcase")}
+            {navItem("/manage-bookings", "Manage bookings", "briefcase")}
           </ul>
         </div>
       )}

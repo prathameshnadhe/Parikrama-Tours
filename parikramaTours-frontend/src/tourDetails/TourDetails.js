@@ -255,7 +255,9 @@ function TourDetails() {
             </div>
           )}
           <div className="cta__content">
-            <h2 className="heading-secondary">What are you waiting for?</h2>
+            <h2 className="heading-secondary header-margin">
+              What are you waiting for?
+            </h2>
             <p className="cta__text">
               {tour.duration} days. 1 adventure. Infinite memories. Make it
               yours today!
@@ -263,21 +265,24 @@ function TourDetails() {
             {userData ? (
               userData.role === "admin" || userData.role === "lead-guide" ? (
                 <a
-                  className="btn btn--green span-all-rows"
+                  className="btn btn--green span-all-rows button-margin "
                   href={`/tour-update/${tour.id}`}
                 >
                   Update Tour
                 </a>
               ) : (
                 <a
-                  className="btn btn--green span-all-rows"
+                  className="btn btn--green span-all-rows button-margin "
                   onClick={() => handleBookingTourClick(id)}
                 >
                   Book tour now!
                 </a>
               )
             ) : (
-              <a className="btn btn--green span-all-rows" href="/login">
+              <a
+                className="btn btn--green span-all-rows button-margin "
+                href="/login"
+              >
                 Login to book tour
               </a>
             )}

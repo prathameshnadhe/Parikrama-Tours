@@ -22,6 +22,7 @@ import ManageReviews from "./tourDetails/ManageReviews";
 import UserBookings from "./auth/UserBookings";
 import UserReviews from "./auth/UserReviews";
 import ProtectedRoute from "./ProtectedRoute";
+import ManageBookings from "./tourDetails/ManageBookings";
 
 function App() {
   return (
@@ -63,6 +64,10 @@ function App() {
           <Route
             path="/manage-tours/:year"
             element={<ProtectedRoute Component={ManageTours} />}
+          />
+          <Route
+            path="/manage-bookings"
+            element={<ProtectedRoute Component={ManageBookings} />}
           />
         </Routes>
         <Footer />

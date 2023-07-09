@@ -25,8 +25,6 @@ function ManageReviews() {
     };
     fetchData();
   }, []);
-  console.log("Review:", reviewData);
-  console.log("reviewData.tour: ", reviewData.tour);
 
   useEffect(() => {
     const fetchTourNames = async () => {
