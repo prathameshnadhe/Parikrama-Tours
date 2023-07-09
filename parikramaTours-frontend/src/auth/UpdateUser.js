@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import "./updateUser.css";
+import "./css/updateUser.css";
 import icons from "../images/icons.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SideNav from "../navbar/SideNav";
 
 function importAll(r) {
   let images = {};
@@ -33,17 +34,6 @@ const UpdateUser = () => {
       setId(userData._id);
     }
   }, [userData]);
-
-  const navItem = (link, text, icon, active) => (
-    <li className={`${active ? "side-nav--active" : ""} li-update`}>
-      <a href={`${link}`}>
-        <svg className="svg-update">
-          <use xlinkHref={`${icons}#icon-${icon}`} />
-        </svg>
-        <p className="text-update">{text}</p>
-      </a>
-    </li>
-  );
 
   const handleUserFormSubmit = async (event) => {
     console.log(id);
@@ -135,25 +125,9 @@ const UpdateUser = () => {
   return (
     <main className="main">
       <div className="user-view">
-        <nav className="user-view__menu">
-          <ul className="side-nav">
-            {navItem("#", "Settings", "settings", true)}
-            {navItem("/my-tours", "My bookings", "briefcase")}
-            {navItem("/my-reviews", "My reviews", "star")}
-            {navItem("#", "Billing", "credit-card")}
-          </ul>
-          {(userData.role === "admin" || userData.role === "lead-guide") && (
-            <div className="admin-nav">
-              <h5 className="admin-nav__heading">Admin</h5>
-              <ul className="side-nav">
-                {navItem("/manage-tours/2023", "Manage tours", "map")}
-                {navItem("/manage-users", "Manage users", "users")}
-                {navItem("/manage-reviews", "Manage reviews", "star")}
-                {navItem("#", "Manage bookings", "briefcase")}
-              </ul>
-            </div>
-          )}
-        </nav>
+        <SideNav
+          isAdmin={userData.role === "admin" || userData.role === "lead-guide"}
+        />
         <div className="user-view__content">
           <div className="user-view__form-container">
             <h2 className="heading-secondary ma-bt-md">

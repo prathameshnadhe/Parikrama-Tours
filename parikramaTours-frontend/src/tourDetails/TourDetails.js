@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./tourDetails.css";
+import "./css/tourDetails.css";
 import logo from "./../images/parikrama_logo.jpg";
 import icons from "../images/icons.svg";
 import { useSelector } from "react-redux";

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import "./login.css";
+import "./css/login.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";

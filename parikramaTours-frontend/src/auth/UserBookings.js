@@ -1,28 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import "../tourDetails/manageTours.css";
-import icons from "../images/icons.svg";
+import "../tourDetails/css/manageTours.css";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
-function getMonthName(month) {
-  const date = new Date();
-  date.setMonth(month - 1); // Months are zero-based in JavaScript (0 - 11)
-  const monthName = date.toLocaleString("en-US", { month: "long" });
-  return monthName;
-}
-
-const navItem = (link, text, icon, active) => (
-  <li className={`${active ? "side-nav--active" : ""} li-update`}>
-    <a href={`${link}`}>
-      <svg className="svg-update">
-        <use xlinkHref={`${icons}#icon-${icon}`} />
-      </svg>
-      <p className="text-update">{text}</p>
-    </a>
-  </li>
-);
+import SideNav from "../navbar/SideNav";
 
 function UserBookings() {
   const userData = useSelector((state) => state.user);
@@ -76,25 +57,9 @@ function UserBookings() {
   return (
     <main className="main">
       <div className="user-view">
-        <nav className="user-view__menu">
-          <ul className="side-nav">
-            {navItem("/user-profile", "Settings", "settings", true)}
-            {navItem("/my-tours", "My bookings", "briefcase")}
-            {navItem("/my-reviews", "My reviews", "star")}
-            {navItem("#", "Billing", "credit-card")}
-          </ul>
-          {(userData.role === "admin" || userData.role === "lead-guide") && (
-            <div className="admin-nav">
-              <h5 className="admin-nav__heading">Admin</h5>
-              <ul className="side-nav">
-                {navItem("/manage-tours/2023", "Manage tours", "map")}
-                {navItem("/manage-users", "Manage users", "users")}
-                {navItem("/manage-reviews", "Manage reviews", "star")}
-                {navItem("#", "Manage bookings", "briefcase")}
-              </ul>
-            </div>
-          )}
-        </nav>
+        <SideNav
+          isAdmin={userData.role === "admin" || userData.role === "lead-guide"}
+        />
         <div className="user-view__content">
           <div className="event-schedule-area-two bg-color pad100">
             <div className="container">

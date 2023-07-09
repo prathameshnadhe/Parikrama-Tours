@@ -21,23 +21,19 @@ import ManageUsers from "./tourDetails/ManageUsers";
 import ManageReviews from "./tourDetails/ManageReviews";
 import UserBookings from "./auth/UserBookings";
 import UserReviews from "./auth/UserReviews";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
-      <React.Fragment>
+      <>
         <Navbar />
 
         <ToastContainer position="top-center" />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/top-6-cheap" element={<Home />} />
-          <Route exact path="/manage-tours/:year" element={<ManageTours />} />
-          <Route exact path="/manage-users" element={<ManageUsers />} />
-          <Route exact path="/manage-reviews" element={<ManageReviews />} />
           <Route exact path="/tour-details/:id" element={<TourDetails />} />
-          <Route exact path="/tour-update/:id" element={<UpdateTour />} />
-          <Route exact path="/add-tour" element={<AddTour />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/user-profile" element={<UpdateUser />} />
@@ -48,9 +44,29 @@ function App() {
             path="/reset-password/:token"
             element={<ResetPassword />}
           />
+          <Route
+            path="/manage-reviews"
+            element={<ProtectedRoute Component={ManageReviews} />}
+          />
+          <Route
+            path="/manage-users"
+            element={<ProtectedRoute Component={ManageUsers} />}
+          />
+          <Route
+            path="/tour-update/:id"
+            element={<ProtectedRoute Component={UpdateTour} />}
+          />
+          <Route
+            path="/add-tour"
+            element={<ProtectedRoute Component={AddTour} />}
+          />
+          <Route
+            path="/manage-tours/:year"
+            element={<ProtectedRoute Component={ManageTours} />}
+          />
         </Routes>
         <Footer />
-      </React.Fragment>
+      </>
     </BrowserRouter>
   );
 }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./modalForm.css";
+import "./css/forgotPasswordForm.css";
 
 function ModalForm({ closeModal }) {
   const [email, setEmail] = useState("");

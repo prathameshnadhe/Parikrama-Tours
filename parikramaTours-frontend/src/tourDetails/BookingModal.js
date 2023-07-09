@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
-import "./bookingModal.css";
+import "./css/bookingModal.css";
 
 function importAll(r) {
   let images = {};
