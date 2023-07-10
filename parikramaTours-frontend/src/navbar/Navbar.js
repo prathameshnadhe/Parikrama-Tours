@@ -91,8 +91,8 @@ function Navbar() {
                 </li>
                 <li>
                   {userData.role === "user" && (
-                    <Link to="#" className="dropdown-item">
-                      Booked Tours
+                    <Link to="/my-tours" className="dropdown-item">
+                      My Bookings
                     </Link>
                   )}
                 </li>
@@ -133,11 +133,11 @@ function Navbar() {
                 Log in
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="btn1" style={{ marginTop: "2rem" }} to="/signup">
                 Sign up
               </Link>
-            </li>
+            </li> */}
           </React.Fragment>
         )}
       </ul>

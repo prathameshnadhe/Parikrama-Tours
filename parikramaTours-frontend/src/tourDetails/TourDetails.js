@@ -6,6 +6,7 @@ import logo from "./../images/parikrama_logo.jpg";
 import icons from "../images/icons.svg";
 import { useSelector } from "react-redux";
 import BookingModal from "./BookingModal";
+import MapboxMap from "./MapboxMap";
 
 function importAll(r) {
   let images = {};
@@ -25,6 +26,7 @@ function TourDetails() {
   const userData = useSelector((state) => state.user);
   const [showModal, setShowModal] = useState(false);
   const [selectedTourId, setSelectedTourId] = useState(null);
+  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +35,7 @@ function TourDetails() {
           `http://localhost:8080/api/v1/tours/${id}`
         );
         setTour(response.data.data.data);
+        setLocations(response.data.data.data.locations);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(true);
@@ -196,9 +199,11 @@ function TourDetails() {
           ))}
       </section>
 
-      {/* <section className="section-map">
-        <div id="map"></div>
-      </section> */}
+      {locations.length > 0 && (
+        <section className="section-map">
+          <MapboxMap locations={locations} />
+        </section>
+      )}
 
       <section className="section-reviews">
         <div className="reviews">

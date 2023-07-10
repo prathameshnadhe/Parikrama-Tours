@@ -3,37 +3,35 @@ import icons from "../images/icons.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import "../auth/css/updateUser.css";
 
 const divItem = (title, type, value, setValue) => (
   <div className="form__group ma-bt-md">
     <label className="form__label" htmlFor="name">
       {title}
     </label>
-    <input
-      id="name"
-      className="form__input"
-      type={type}
-      value={value}
-      required
-      name="name"
-      onChange={(e) => setValue(e.target.value)}
-    />
-  </div>
-);
-
-const divTextAreaItem = (title, active, value, setValue) => (
-  <div className="form__group ma-bt-md">
-    <label className="form__label" htmlFor="name">
-      {title}
-    </label>
-    <textarea
-      id="name"
-      className={`${active ? "form__textarea-size" : ""} form__textarea`}
-      value={value}
-      required
-      name="name"
-      onChange={(e) => setValue(e.target.value)}
-    />
+    {type !== "textarea" ? (
+      <input
+        id="name"
+        className="form__input"
+        type={type}
+        value={value}
+        placeholder={`Enter a valid ${title}`}
+        required
+        name="name"
+        onChange={(e) => setValue(e.target.value)}
+      />
+    ) : (
+      <textarea
+        id="name"
+        className="form__input"
+        value={value}
+        placeholder={`Enter a valid ${title}`}
+        required
+        onChange={(e) => setValue(e.target.value)}
+        style={title === "Description" ? { height: "20rem" } : {}}
+      ></textarea>
+    )}
   </div>
 );
 
@@ -159,10 +157,10 @@ function UpdateTour() {
               )}
               {divItem("Difficulty", "text", difficulty, setTourDifficulty)}
               {divItem("Price", "text", price, setTourPrice)}
-              {divTextAreaItem("Summary", false, summary, setTourSummary)}
-              {divTextAreaItem(
+              {divItem("Summary", "textarea", summary, setTourSummary)}
+              {divItem(
                 "Description",
-                true,
+                "textarea",
                 description,
                 setTourDescription
               )}

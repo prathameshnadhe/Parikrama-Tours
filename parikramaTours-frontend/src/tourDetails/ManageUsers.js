@@ -19,6 +19,12 @@ function ManageUsers() {
   const user = useSelector((state) => state.user);
   const [userData, setUserData] = useState([]);
   const [error, setError] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 6;
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +77,7 @@ function ManageUsers() {
                       id="home"
                       role="tabpanel"
                     >
-                      {userData.length > 0 && (
+                      {currentUsers.length > 0 && (
                         <div className="table-responsive">
                           <table className="table">
                             <thead>
@@ -109,59 +115,68 @@ function ManageUsers() {
                               </tr>
                             </thead>
                             <tbody>
-                              {userData
-                                .filter(
-                                  (item) =>
-                                    item.role === "user" ||
-                                    item.role === "guide" ||
-                                    item.role === "lead-guide"
-                                )
-                                .map((user) => (
-                                  <tr key={user._id} className="inner-box">
-                                    <th scope="row">
-                                      <div className="form__group">
-                                        <img
-                                          className="form__user-photo"
-                                          src={userImage[user.photo]}
-                                          alt={user.name}
-                                        />
-                                      </div>
-                                    </th>
-                                    <td>
-                                      <div className="text-user">
-                                        {user.name}
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div className="text-user">
-                                        {user.email}
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div className="text-user">
-                                        {user.role}
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div className="event-wrap">
-                                        <button
-                                          className="btn btn--small btn--red "
-                                          type="button"
-                                          onClick={() =>
-                                            handleDeleteUser(user._id)
-                                          }
-                                        >
-                                          Delete Account
-                                        </button>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                ))}
+                              {currentUsers.map((user) => (
+                                <tr key={user._id} className="inner-box">
+                                  <th scope="row">
+                                    <div className="form__group">
+                                      <img
+                                        className="form__user-photo"
+                                        src={userImage[user.photo]}
+                                        alt={user.name}
+                                      />
+                                    </div>
+                                  </th>
+                                  <td>
+                                    <div className="text-user">{user.name}</div>
+                                  </td>
+                                  <td>
+                                    <div className="text-user">
+                                      {user.email}
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="text-user">{user.role}</div>
+                                  </td>
+                                  <td>
+                                    <div className="event-wrap">
+                                      <button
+                                        className="btn btn--small btn--red"
+                                        type="button"
+                                        onClick={() =>
+                                          handleDeleteUser(user._id)
+                                        }
+                                      >
+                                        Delete Account
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
                             </tbody>
                           </table>
                         </div>
                       )}
                     </div>
+                  </div>
+                  <br />
+                  <div className="pagination">
+                    <button
+                      className="btn btn--small"
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                    <button
+                      className="btn btn--small"
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      disabled={indexOfLastUser >= userData.length}
+                    >
+                      Next
+                    </button>
+                  </div>
+                  <div className="btn btn--small disabled">
+                    Total Users: {userData.length}
                   </div>
                 </div>
               </div>

@@ -9,6 +9,29 @@ function ManageReviews() {
   const [reviewData, setReviewData] = useState([]);
   const [error, setError] = useState(false);
   const [tourName, setTourName] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Define the number of reviews per page
+  const reviewsPerPage = 6;
+
+  // Calculate the index of the last review and the index of the first review on the current page
+  const indexOfLastReview = currentPage * reviewsPerPage;
+  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+
+  // Get the reviews to display on the current page
+  const currentReviews = reviewData.slice(
+    indexOfFirstReview,
+    indexOfLastReview
+  );
+
+  // Handle page navigation
+  const goToPreviousPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -130,7 +153,7 @@ function ManageReviews() {
                               </tr>
                             </thead>
                             <tbody>
-                              {reviewData.map((review, index) => (
+                              {currentReviews.map((review, index) => (
                                 <tr key={review._id} className="inner-box">
                                   <th scope="row">
                                     <div className="text-user">
@@ -169,6 +192,26 @@ function ManageReviews() {
                               ))}
                             </tbody>
                           </table>
+                          <br />
+                          <div className="pagination">
+                            <button
+                              className="btn btn--small"
+                              onClick={goToPreviousPage}
+                              disabled={currentPage === 1}
+                            >
+                              Previous
+                            </button>
+                            <button
+                              className="btn btn--small"
+                              onClick={goToNextPage}
+                              disabled={indexOfLastReview >= reviewData.length}
+                            >
+                              Next
+                            </button>
+                          </div>
+                          <div className="btn btn--small disabled">
+                            Total Reviews: {reviewData.length}
+                          </div>
                         </div>
                       )}
                     </div>

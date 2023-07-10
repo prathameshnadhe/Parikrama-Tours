@@ -3,6 +3,7 @@ import icons from "../images/icons.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import "../auth/css/updateUser.css";
 
 function AddTour() {
   const [name, setTourName] = useState("");
@@ -83,32 +84,40 @@ function AddTour() {
       )}
       {startLocation && (
         <>
-          <input
-            id="locationType"
-            className="form__input"
-            type="text"
-            value={startLocation.type}
-            required
-            name="locationType"
-            onChange={(e) =>
-              setStartLocation({ ...startLocation, type: e.target.value })
-            }
-          />
-          <input
-            id="locationCoordinates"
-            className="form__input"
-            type="text"
-            value={startLocation.coordinates.join(", ")}
-            required
-            name="locationCoordinates"
-            onChange={(e) => {
-              const coordinates = e.target.value.split(", ");
-              setStartLocation({
-                ...startLocation,
-                coordinates: coordinates.map((coord) => parseFloat(coord)),
-              });
-            }}
-          />
+          {title === "Start Location Coordinates" && (
+            <>
+              <input
+                id="locationType"
+                className="form__input"
+                type="text"
+                value={startLocation.type}
+                required
+                name="locationType"
+                onChange={(e) =>
+                  setStartLocation({ ...startLocation, type: e.target.value })
+                }
+              />
+              <input
+                id="locationCoordinates"
+                className="form__input"
+                type="text"
+                value={startLocation.coordinates.join(", ")}
+                required
+                name="locationCoordinates"
+                onChange={(e) => {
+                  const coordinates = e.target.value.split(", ");
+                  const parsedCoordinates = coordinates.map((coord) => {
+                    const parsedCoord = parseFloat(coord);
+                    return isNaN(parsedCoord) ? 0 : parsedCoord;
+                  });
+                  setStartLocation({
+                    ...startLocation,
+                    coordinates: parsedCoordinates,
+                  });
+                }}
+              />
+            </>
+          )}
         </>
       )}
     </div>
@@ -150,12 +159,6 @@ function AddTour() {
                 description,
                 setTourDescription
               )}
-              {/* {divItem(
-                "Start Location Type",
-                "text",
-                startLocation.type,
-                (value) => setStartLocation({ ...startLocation, type: value })
-              )} */}
               {divItem(
                 "Start Location Coordinates",
                 "text",
@@ -163,14 +166,19 @@ function AddTour() {
                   ? startLocation.coordinates.join(", ")
                   : "",
                 (value) => {
-                  const coordinates = value.split(", ");
+                  const coordinates = value
+                    .split(",")
+                    .map((coord) => coord.trim());
+                  const parsedCoordinates = coordinates.map((coord) => {
+                    const parsedValue = parseFloat(coord);
+                    return isNaN(parsedValue) ? "" : parsedValue.toString();
+                  });
                   setStartLocation((prevStartLocation) => ({
                     ...prevStartLocation,
-                    coordinates: coordinates.map((coord) => parseFloat(coord)),
+                    coordinates: parsedCoordinates,
                   }));
                 }
               )}
-
               <div className="form__group right">
                 <button className="btn btn--small btn--green" type="submit">
                   Add Tour
