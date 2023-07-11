@@ -13,7 +13,8 @@ const MapboxMap = ({ locations }) => {
 
     const map = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/pratham0280/cliod1zr0000601o14nto8pys",
+      //   style: "mapbox://styles/pratham0280/cliod1zr0000601o14nto8pys",
+      style: "mapbox://styles/pratham0280/cljwwxt99025x01pj61h71m55",
       scrollZoom: false,
     });
 
