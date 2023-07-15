@@ -241,43 +241,51 @@ function TourDetails() {
       </section>
 
       <section className="section-cta">
-        <div className="cta">
+        <div className="cta flex-container">
           <div className="cta__img cta__img--logo">
             <img src={logo} alt="Parikrama_Logo" />
           </div>
-          {tour && tour.images && tour.images.length > 0 && (
-            <div>
-              <img
-                className="cta__img cta__img--1"
-                src={tourImages[tour.images[1]]}
-                alt={tour.name}
-              />
-              <img
-                className="cta__img cta__img--2"
-                src={tourImages[tour.images[0]]}
-                alt={tour.name}
-              />
-            </div>
-          )}
-          <div className="cta__content">
+          <div className="cta__img-container">
+            {tour && tour.images && tour.images.length > 0 && (
+              <>
+                <img
+                  className="cta__img cta__img--1"
+                  src={tourImages[tour.images[1]]}
+                  alt={tour.name}
+                />
+                <img
+                  className="cta__img cta__img--2"
+                  src={tourImages[tour.images[0]]}
+                  alt={tour.name}
+                />
+              </>
+            )}
+          </div>
+          <div className="cta__text-container">
             <h2 className="heading-secondary header-margin">
               What are you waiting for?
             </h2>
             <p className="cta__text">
-              {tour.duration} days. 1 adventure. Infinite memories. Make it
-              yours today!
+              {tour.duration && (
+                <>
+                  {tour.duration} days. 1 adventure. Infinite memories. Make it
+                  yours today!
+                </>
+              )}
             </p>
+          </div>
+          <div className="cta__button-container">
             {userData ? (
               userData.role === "admin" || userData.role === "lead-guide" ? (
                 <a
-                  className="btn btn--green span-all-rows button-margin "
+                  className="btn btn--green span-all-rows button-margin"
                   href={`/tour-update/${tour.id}`}
                 >
                   Update Tour
                 </a>
               ) : (
                 <a
-                  className="btn btn--green span-all-rows button-margin "
+                  className="btn btn--green span-all-rows button-margin"
                   onClick={() => handleBookingTourClick(id)}
                 >
                   Book tour now!
@@ -285,7 +293,7 @@ function TourDetails() {
               )
             ) : (
               <a
-                className="btn btn--green span-all-rows button-margin "
+                className="btn btn--green span-all-rows button-margin"
                 href="/login"
               >
                 Login to book tour
@@ -294,6 +302,7 @@ function TourDetails() {
           </div>
         </div>
       </section>
+
       {showModal && (
         <BookingModal tourId={selectedTourId} closeModal={closeModal} />
       )}

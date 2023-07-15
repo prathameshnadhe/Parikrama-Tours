@@ -43,7 +43,7 @@
 .event-schedule-area .tab-area .tab-content .table thead td,
 .event-schedule-area .tab-area .tab-content .table thead th {
   border-bottom-width: 1px;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #252525;
 }
@@ -167,21 +167,18 @@
   font-weight: normal;
 }
 .event-schedule-area-two .tab-content .table tbody tr td {
-  padding: 30px 20px;
+  padding: 2rem 1.2rem;
   vertical-align: middle;
 }
 .event-schedule-area-two .tab-content .table tbody tr td .r-no span {
   color: #252525;
 }
-.event-schedule-area-two .tab-content .table tbody tr td .event-wrap h3 a {
+.event-schedule-area-two .tab-content .table tbody tr th .event-date span {
   font-size: 2rem;
   line-height: 4rem;
   color: #cf057c;
   display: flow-root;
   font-weight: 551;
-  /* background: linear-gradient(to right, #7dd56f, #28b487);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   transition: all 0.4s;
@@ -330,4 +327,89 @@
 .text-user {
   font-size: 2rem;
   text-align: center;
+}
+
+/* For mobile devices */
+@media only screen and (max-width: 767px) {
+  .event-schedule-area .tab-area .nav-item {
+    margin-right: 2rem;
+    margin-left: 2rem;
+  }
+  .event-schedule-area-two ul.custom-tab li {
+    margin-right: 2rem;
+    margin-left: 2rem;
+  }
+  .event-schedule-area .tab-area .nav-item .nav-link,
+  .event-schedule-area-two .tab-content .table thead,
+  .event-schedule-area-two .tab-content .table tbody tr th .event-date span {
+    font-size: 1.5rem;
+  }
+  .event-schedule-area .tab-area .tab-content .table thead td,
+  .event-schedule-area .tab-area .tab-content .table thead th {
+    font-size: 0.7rem;
+  }
+
+  .event-schedule-area .tab-area .tab-content .table tbody th .heading,
+  .event-schedule-area .tab-area .tab-content .table tbody td .heading {
+    font-size: 0.7rem;
+  }
+
+  .event-schedule-area .tab-area .tab-content .table tbody th span,
+  .event-schedule-area .tab-area .tab-content .table tbody td span {
+    font-size: 0.8rem;
+  }
+
+  .event-schedule-area .tab-area .tab-content .table tbody th span.date,
+  .event-schedule-area .tab-area .tab-content .table tbody td span.date,
+  .event-schedule-area .tab-area .tab-content .table tbody th p {
+    font-size: 0.5rem;
+  }
+
+  .event-schedule-area-two ul.custom-tab li a {
+    font-size: 1.2rem;
+    line-height: 0.58rem;
+  }
+
+  .event-schedule-area-two
+    .tab-content
+    .table
+    tbody
+    tr
+    td
+    .event-wrap
+    .categories
+    a {
+    color: #252525;
+    font-size: 0.6rem;
+    margin-left: 10px;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+
+  .event-schedule-area-two .tab-content .table tbody tr td {
+    padding: 1rem 0.6rem;
+  }
+
+  .h1-title {
+    font-size: 2.5rem;
+  }
+
+  .no-data {
+    font-size: 2rem;
+    text-align: center;
+    padding-bottom: 1rem;
+  }
+}
+
+/* For tablet devices */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .event-schedule-area .tab-area .nav-item {
+    margin-right: 3rem;
+    margin-left: 3rem;
+  }
+  .event-schedule-area-two ul.custom-tab li {
+    margin-right: 3rem;
+    margin-left: 3rem;
+  }
 }

@@ -123,7 +123,7 @@ const UpdateUser = () => {
   };
 
   return (
-    <main className="main">
+    <main className="main1">
       <div className="user-view">
         <SideNav
           isAdmin={userData.role === "admin" || userData.role === "lead-guide"}

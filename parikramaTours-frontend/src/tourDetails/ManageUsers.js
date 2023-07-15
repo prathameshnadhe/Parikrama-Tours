@@ -22,9 +22,13 @@ function ManageUsers() {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 6;
 
+  const filteredUsers = userData.filter(
+    (user) => user.role === "user" || user.role === "guide"
+  );
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,8 +63,10 @@ function ManageUsers() {
     }
   };
 
+  console.log(filteredUsers.length);
+
   return (
-    <main className="main">
+    <main className="main1">
       <div className="user-view">
         <SideNav
           isAdmin={user.role === "admin" || user.role === "lead-guide"}
@@ -77,7 +83,7 @@ function ManageUsers() {
                       id="home"
                       role="tabpanel"
                     >
-                      {currentUsers.length > 0 && (
+                      {filteredUsers.length > 0 && (
                         <div className="table-responsive">
                           <table className="table">
                             <thead>
@@ -170,13 +176,13 @@ function ManageUsers() {
                     <button
                       className="btn btn--small"
                       onClick={() => setCurrentPage(currentPage + 1)}
-                      disabled={indexOfLastUser >= userData.length}
+                      disabled={indexOfLastUser >= filteredUsers.length}
                     >
                       Next
                     </button>
                   </div>
                   <div className="btn btn--small disabled">
-                    Total Users: {userData.length}
+                    Total Users: {filteredUsers.length}
                   </div>
                 </div>
               </div>

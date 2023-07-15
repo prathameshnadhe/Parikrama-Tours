@@ -25,12 +25,6 @@
 }
 
 header {
-  /* background-color: #444;
-  padding: 0 2rem;
-  height: 10rem;
-  position: relative;
-  z-index: 100;
-  align-items: center; */
   background-color: #444;
   padding: 0 2rem;
   position: relative;
@@ -39,6 +33,10 @@ header {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+}
+
+a.btn-margin-top.btn1 {
+  margin-top: 3rem;
 }
 
 .btn1,
@@ -73,8 +71,8 @@ header {
 
 .dropdown-hover .dropdown-menu {
   display: block;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
   position: relative;
   font-size: 16px;
   line-height: 56px;
@@ -141,7 +139,7 @@ header {
   margin: 0 0.6rem;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 685px) {
   .navbar {
     flex-wrap: wrap;
   }
@@ -159,5 +157,37 @@ header {
   .navbar-nav li {
     margin: 0;
     margin-bottom: 0.6rem;
+  }
+
+  .btn1,
+  .btn1:link,
+  .btn1:visited {
+    margin: 0.2rem;
+    font-size: 1rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .btn2,
+  .btn2:link,
+  .btn2:visited {
+    width: 5rem;
+  }
+
+  .card__picture-img-user-nav {
+    width: 75%;
+  }
+
+  .navbar-logo {
+    height: 7rem;
+    width: 15rem;
+  }
+
+  .btn-transs {
+    background-color: transparent;
+    margin-top: 0.5rem;
+  }
+
+  a.btn-margin-top.btn1 {
+    margin-top: 1rem;
   }
 }

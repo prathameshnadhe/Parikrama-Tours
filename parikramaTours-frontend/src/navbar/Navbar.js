@@ -38,27 +38,19 @@ function Navbar() {
       <ul className="navbar-nav float-right">
         {userData ? (
           <React.Fragment>
-            <li className="nav-item ">
-              <Link
-                className=" btn-margin-top btn1"
-                style={{ marginTop: "3rem" }}
-                to="/"
-              >
+            <li className=" nav-item ">
+              <a className="btn-margin-top btn1" href="/">
                 All Tours
-              </Link>
+              </a>
             </li>
-            <li className="nav-item ">
-              <a
-                className=" btn1"
-                style={{ marginTop: "3rem" }}
-                href="/top-6-cheap"
-              >
+            <li className=" nav-item ">
+              <a className="btn-margin-top btn1" href="/top-6-cheap">
                 Top 6 Affordable
               </a>
             </li>
-            <div className="dropdown dropdown-hover">
+            <li className="dropdown dropdown-hover">
               <button
-                className="btn1 btn-trans"
+                className=" btn1 btn2 btn-transs"
                 type="button"
                 id="dropdownMenuButton"
                 data-bs-toggle="dropdown"
@@ -77,7 +69,6 @@ function Navbar() {
               <ul
                 className="dropdown-menu"
                 aria-labelledby="dropdownMenuButton"
-                // style={{ textAlign: "center" }}
               >
                 <li>
                   <Link to="/user-profile" className="dropdown-item">
@@ -110,14 +101,14 @@ function Navbar() {
                   </button>
                 </li>
               </ul>
-            </div>
+            </li>
           </React.Fragment>
         ) : (
           <React.Fragment>
             <li className="nav-item">
-              <Link className="btn1" style={{ marginTop: "2rem" }} to="/">
+              <a className="btn1" style={{ marginTop: "2rem" }} href="/">
                 All Tours
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
               <a

@@ -98,7 +98,7 @@ function ManageReviews() {
   };
 
   return (
-    <main className="main">
+    <main className="main1">
       <div className="user-view">
         <SideNav
           isAdmin={user.role === "admin" || user.role === "lead-guide"}

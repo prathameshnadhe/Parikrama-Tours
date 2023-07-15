@@ -1,4 +1,4 @@
-.main {
+.main1 {
   background-color: #f7f7f7;
   padding: 6rem 6rem;
   -webkit-box-flex: 1;
@@ -216,13 +216,12 @@
 
 /* Mobile Phones */
 @media only screen and (max-width: 480px) {
-  .main {
-    padding: 2rem 1rem;
+  .main1 {
+    padding: 0.1rem 0.1rem;
   }
-
   .admin-nav__heading {
-    margin: 0 1.5rem 1.5rem;
-    font-size: 1.8rem;
+    margin: 0 0.15rem 0.15rem;
+    font-size: 1rem;
   }
 
   .user-view__content {

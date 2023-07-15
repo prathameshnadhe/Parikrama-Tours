@@ -129,7 +129,7 @@ function BookingModal({ tourId, closeModal }) {
         <Modal.Title className="custom-header">Tour Booking Cart</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="card mb-4">
+        <div className="card1 mb-4">
           <div className="card-body p-4 custom-modal-body">
             <table className="table table-custom">
               <tbody>
@@ -147,8 +147,12 @@ function BookingModal({ tourId, closeModal }) {
                       {tourData.name}
                     </p>
                   </td>
-                  <td className="text-center">
+                  <td
+                    className="text-center  d-flex justify-content-center align-items-center"
+                    style={{ flexDirection: "column" }}
+                  >
                     <p className="small text-muted mb-4">Start Dates</p>
+                    <br />
                     <select
                       className="form-select select"
                       value={startDate}
@@ -211,7 +215,7 @@ function BookingModal({ tourId, closeModal }) {
           </div>
         </div>
 
-        <div className="card mb-5">
+        <div className="card1 mb-5">
           <div className="card-body p-4  custom-modal-body">
             <div className="float-end custom-modal-body">
               <p className="mb-0 me-5 d-flex align-items-center">

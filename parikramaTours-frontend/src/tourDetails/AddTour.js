@@ -124,20 +124,8 @@ function AddTour() {
   );
 
   return (
-    <main className="main">
+    <main className="main1">
       <div className="user-view">
-        <nav className="user-view__menu">
-          <ul className="side-nav">
-            <li className={"side-nav--active li-update"}>
-              <a href={`#`}>
-                <svg className="svg-update">
-                  <use xlinkHref={`${icons}#icon-settings`} />
-                </svg>
-                <p className="text-update">Add Tour</p>
-              </a>
-            </li>
-          </ul>
-        </nav>
         <div className="user-view__content">
           <div className="user-view__form-container">
             <h2 className="heading-secondary ma-bt-md">Add Tour</h2>
